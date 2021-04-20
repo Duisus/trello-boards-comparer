@@ -1,4 +1,5 @@
 from enum import Enum, unique
+from typing import *
 
 
 @unique
@@ -36,8 +37,8 @@ class TrelloElement(Enum):
 class CompareResult:
     def __init__(self,
                  compared_element: TrelloElement,
-                 compare_result_type: CompareResultType = CompareResultType.SUCCESS,
-                 compared_element_name: str = ""):
+                 compared_element_name: str = "",
+                 compare_result_type: CompareResultType = CompareResultType.SUCCESS):
         self.compared_element = compared_element
         self.type = compare_result_type
         self.compared_element_name = compared_element_name
