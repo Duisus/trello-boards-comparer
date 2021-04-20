@@ -36,9 +36,11 @@ class TrelloElement(Enum):
 class CompareResult:
     def __init__(self,
                  compared_element: TrelloElement,
-                 type: CompareResultType = CompareResultType.SUCCESS,
-                 name: str = ""):
-        pass
+                 compare_result_type: CompareResultType = CompareResultType.SUCCESS,
+                 compared_element_name: str = ""):
+        self.compared_element = compared_element
+        self.type = compare_result_type
+        self.compared_element_name = compared_element_name
 
     def add_inner_compare_result(self, compare_result: "CompareResult"):
         pass
