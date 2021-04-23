@@ -2,6 +2,9 @@ from enum import Enum, unique
 from typing import *
 
 
+__all__ = ["CompareResult", "CompareResultType", "TrelloElement"]
+
+
 @unique
 class CompareResultType(Enum):
     SUCCESS = (1, "сравнение {name} успешно")
@@ -28,6 +31,7 @@ class TrelloElement(Enum):
     MEMBER = (9, "участник")
     ATTACHMENT = (10, "вложение")
     COVER = (11, "обложка")
+    COMMENT = (12, "комментарий")
 
     def __init__(self, value, element_name):
         self._value_ = value
