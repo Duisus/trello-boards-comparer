@@ -1,5 +1,6 @@
 from trello import *
 from .CompareResult import *
+import typing
 
 
 class TrelloCardComparer:
@@ -59,11 +60,61 @@ class TrelloCardComparer:
         checklist_items_to_compare = checklist_to_compare.items
         expected_checklist_items = expected_checklist.items
 
+        i = 0
+        min_length = min(len(checklist_items_to_compare), len(expected_checklist_items))
+        max_length = max(len(checklist_items_to_compare), len(expected_checklist_items))
+
+        for i in range(min_length):
+            compare_result.add_inner_compare_result(
+                cls._compare_checklist_item(checklist_items_to_compare[i],
+                                            expected_checklist_items[i]))
+
+        if len(checklist_items_to_compare) > len(expected_checklist_items):
+            for i in range(max_length):
+                compare_result.add_inner_compare_result(CompareResult(
+                    TrelloElement.CHECKLIST_ITEM,
+                    checklist_items_to_compare[i]['name'],
+                    CompareResultType.HAS_EXTRA_ELEMENT
+                ))
+
+        if len(checklist_items_to_compare) < len(expected_checklist_items):
+            for i in range(max_length):
+                compare_result.add_inner_compare_result(CompareResult(
+                    TrelloElement.CHECKLIST_ITEM,
+                    expected_checklist_items[i]['name'],
+                    CompareResultType.DOES_NOT_CONTAIN_ELEMENT
+                ))
+
         return compare_result
 
     @classmethod
-    def _compare_checklist_item(cls) -> CompareResult:
-        pass
+    def _compare_checklist_item(cls,
+                                checklist_item_to_compare: Dict,
+                                expected_checklist_item: Dict) -> CompareResult:
+        compare_result = CompareResult(TrelloElement.CHECKLIST_ITEM,
+                                       checklist_item_to_compare['name'])
+
+        if checklist_item_to_compare['checked'] != checklist_item_to_compare['checked']:
+            compare_result.add_inner_compare_result(CompareResult(
+                TrelloElement.CHECKLIST_ITEM,
+                'Маркер',
+                CompareResultType.INVALID_VALUE))
+        else:
+            compare_result.add_inner_compare_result(CompareResult(
+                TrelloElement.CHECKLIST_ITEM,
+                'Маркер'))
+
+        if checklist_item_to_compare['name'] != expected_checklist_item['name']:
+            compare_result.add_inner_compare_result(CompareResult(
+                TrelloElement.CHECKLIST_ITEM,
+                'Элемент чек-листа',
+                CompareResultType.INVALID_VALUE))
+        else:
+            compare_result.add_inner_compare_result(CompareResult(
+                TrelloElement.CHECKLIST_ITEM,
+                'Элемент чек-листа'))
+
+        return compare_result
 
     @classmethod
     def _compare_description(cls) -> CompareResult:
