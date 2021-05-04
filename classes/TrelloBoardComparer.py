@@ -1,5 +1,6 @@
 from trello import *
 from .CompareResult import *
+from .TrelloCardComparer import *
 
 
 class TrelloBoardComparer:
@@ -20,6 +21,7 @@ class TrelloBoardComparer:
         lists_to_compare_names = (item.name for item in lists_to_compare)
         expected_lists_names = (item.name for item in expected_lists)
 
+        # TODO вынести в абстрактый класс
         for i in range(len(lists_to_compare)):
             if lists_to_compare[i].name not in expected_lists_names:
                 compare_result.add_inner_compare_result(CompareResult(
@@ -78,4 +80,4 @@ class TrelloBoardComparer:
     def _compare_cards(self,
                        card_to_compare: Card,
                        expected_card: Card) -> CompareResult:
-        pass
+        return TrelloCardComparer.compare_cards(card_to_compare, expected_card)

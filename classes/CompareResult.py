@@ -2,6 +2,9 @@ from enum import Enum, unique
 from typing import *
 
 
+__all__ = ["CompareResult", "CompareResultType", "TrelloElement"]
+
+
 @unique
 class CompareResultType(Enum):
     SUCCESS = (1, "сравнение {name} успешно")
@@ -18,7 +21,7 @@ class CompareResultType(Enum):
 @unique
 class TrelloElement(Enum):
     BOARD = (1, "доска")
-    LIST = (2, "колонка")
+    LIST = (2, "список")
     CARD = (3, "карточка")
     CHECKLIST = (4, "чек-лист")
     CHECKLIST_ITEM = (5, "элемент чек-листа")
@@ -28,6 +31,7 @@ class TrelloElement(Enum):
     MEMBER = (9, "участник")
     ATTACHMENT = (10, "вложение")
     COVER = (11, "обложка")
+    COMMENT = (12, "комментарий")
 
     def __init__(self, value, element_name):
         self._value_ = value
@@ -44,7 +48,10 @@ class CompareResult:
         self._compared_element = compared_element
         self._type = compare_result_type
         self._compared_element_name = compared_element_name
+
         self._inner_compare_results = []
+        self.expected_value = None
+        self.actual_value = None
 
     @property
     def compared_element(self):
@@ -68,7 +75,7 @@ class CompareResult:
 
         self._inner_compare_results.append(compare_result)
 
-    def get_not_success_results(self) -> Generator["CompareResult"]:
+    def get_not_success_results(self) -> Generator["CompareResult", None, None]:
         if self.is_success:
             return
 
