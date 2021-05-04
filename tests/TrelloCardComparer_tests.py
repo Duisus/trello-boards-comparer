@@ -1,7 +1,9 @@
 import unittest
 
 from trello import *
+from parameterized import parameterized
 
+from classes.CompareResult import *
 from classes.TrelloCardComparer import *
 
 CONFIG_FILE = r"..\config.json"
@@ -27,3 +29,11 @@ class TrelloCardComparerTests(unittest.TestCase):
 
         result_types = [result.type for result in compare_result.get_not_success_results()]
         self.assertEqual(expected_result, result_types)
+
+    @parameterized.expand([
+        ("2Hx23sXX",),
+        ("jnd0PbWY", [CompareResultType.FAILED, CompareResultType.INVALID_VALUE])
+    ])
+    def test_mention_in_comments(self, compared_card_id, expected_result=None):
+        expected_card_id = "jo8qijTo"
+        self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
