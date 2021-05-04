@@ -70,3 +70,6 @@ class TrelloCardComparerTests(unittest.TestCase):
     def test_comment_without_mentions(self, compared_card_id, expected_result=None):
         expected_card_id = "jtv2DrFZ"
         self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
+
+    def test_comparer_equal_card(self):
+        self.card_comparer_test("2l4SfS5E", "jrpqIHyO")
