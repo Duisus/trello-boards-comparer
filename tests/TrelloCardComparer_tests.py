@@ -31,10 +31,41 @@ class TrelloCardComparerTests(unittest.TestCase):
         self.assertEqual(expected_result, result_types)
 
     @parameterized.expand([
+        ("38Pm4D5y",),
+        ("qOt96HfB",
+         [CompareResultType.FAILED, CompareResultType.INVALID_VALUE,
+          CompareResultType.INVALID_VALUE, CompareResultType.INVALID_VALUE,
+          CompareResultType.HAS_EXTRA_ELEMENT])
+    ])
+    def test_checklist_items_comparing(self, compared_card_id, expected_result=None):
+        expected_card_id = "xXq2tR5U"
+        self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
+
+    @parameterized.expand([
+        ("UNt8K4Wu",),
+        ("uXQGvleB",
+         [CompareResultType.FAILED,
+          CompareResultType.HAS_EXTRA_ELEMENT,
+          CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+    ])
+    def test_checklists_comparing(self, compared_card_id, expected_result=None):
+        expected_card_id = "0MdRCgTy"
+        self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
+
+    @parameterized.expand([
+        ("8LpNCzDa",),
+        ("havOVdMx",
+         [CompareResultType.FAILED, CompareResultType.INVALID_VALUE])
+    ])
+    def test_description_with_link_comparing(self, compared_card_id, expected_result=None):
+        expected_card_id = "gl6IqA7c"
+        self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
+
+    @parameterized.expand([
         ("2Hx23sXX",),
         ("jnd0PbWY", [CompareResultType.FAILED, CompareResultType.INVALID_VALUE])
     ])
-    def test_mention_in_comments(self, compared_card_id, expected_result=None):
+    def test_mention_in_comments_comparing(self, compared_card_id, expected_result=None):
         expected_card_id = "jo8qijTo"
         self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
 
