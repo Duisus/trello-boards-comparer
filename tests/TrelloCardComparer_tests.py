@@ -33,8 +33,9 @@ class TrelloCardComparerTests(unittest.TestCase):
     @parameterized.expand([
         ("38Pm4D5y",),
         ("qOt96HfB",
-         [CompareResultType.FAILED, CompareResultType.INVALID_VALUE,
-          CompareResultType.INVALID_VALUE, CompareResultType.INVALID_VALUE,
+         [CompareResultType.FAILED, CompareResultType.FAILED,
+          CompareResultType.FAILED, CompareResultType.INVALID_VALUE,
+          CompareResultType.FAILED, CompareResultType.INVALID_VALUE, CompareResultType.INVALID_VALUE,
           CompareResultType.HAS_EXTRA_ELEMENT])
     ])
     def test_checklist_items_comparing(self, compared_card_id, expected_result=None):
@@ -71,8 +72,7 @@ class TrelloCardComparerTests(unittest.TestCase):
 
     @parameterized.expand([
         ("YldYBOxa",),
-        ("I9z6krUS", [CompareResultType.FAILED, CompareResultType.DOES_NOT_CONTAIN_ELEMENT,
-                      CompareResultType.HAS_EXTRA_ELEMENT])
+        ("I9z6krUS", [CompareResultType.FAILED, CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
     ])
     def test_card_has_attachments(self, compared_card_id, expected_result=None):
         expected_card_id = "3lS576gC"
@@ -139,3 +139,20 @@ class TrelloCardComparerTests(unittest.TestCase):
 
     def test_comparer_equal_complex_cards(self):
         self.card_comparer_test("2l4SfS5E", "jrpqIHyO")
+
+    @parameterized.expand([
+        ("jnd0PbWY",
+         [
+             CompareResultType.FAILED,  # card result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # checklist result
+             CompareResultType.INVALID_VALUE,  # description result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # labels result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # cover result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # due result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # members result
+             CompareResultType.DOES_NOT_CONTAIN_ELEMENT,  # attachments result
+         ])
+    ])
+    def test_functionality(self, compared_card_id, expected_result=None):
+        expected_cards_id = "2l4SfS5E"
+        self.card_comparer_test(compared_card_id, expected_cards_id, expected_result)
