@@ -5,7 +5,6 @@ from trello import *
 
 from .CompareResult import *
 
-
 __all__ = ["TrelloCardComparer"]
 
 
@@ -28,7 +27,7 @@ class TrelloCardComparer:
 
         compare_result.add_inner_compare_result(
             cls._compare_description(
-                card_to_compare.description, expected_card.description))
+                card_to_compare, expected_card))
 
         compare_result.add_inner_compare_result(
             cls._compare_comments(
@@ -54,7 +53,7 @@ class TrelloCardComparer:
 
     @classmethod
     def _get_comments(cls, card: Card) -> typing.List[str]:
-        return [comment_data['data']['text'] for comment_data in card.comments]
+        return [comment_data['data']['text'].strip() for comment_data in card.comments]
 
     @classmethod
     def _compare_all_checklists(cls,
@@ -134,42 +133,51 @@ class TrelloCardComparer:
                                 checklist_item_to_compare: typing.Dict,
                                 expected_checklist_item: typing.Dict) -> CompareResult:
         compare_result = CompareResult(TrelloElement.CHECKLIST_ITEM,
-                                       checklist_item_to_compare['name'])
+                                       'Элемент чек-листа')
 
-        if checklist_item_to_compare['checked'] != checklist_item_to_compare['checked']:
-            compare_result.add_inner_compare_result(CompareResult(
+        if checklist_item_to_compare['checked'] != expected_checklist_item['checked']:
+            checked_compare = CompareResult(
                 TrelloElement.CHECKLIST_ITEM,
                 'Маркер',
-                CompareResultType.INVALID_VALUE))
+                CompareResultType.INVALID_VALUE)
 
-            compare_result.expected_value('отмеченый' if expected_checklist_item['checked']
-                                          else 'неотмеченый')
-            compare_result.actual_value('отмеченный' if checklist_item_to_compare['checked']
-                                        else 'неотмеченый')
+            checked_compare.expected_value = 'отмеченый' if expected_checklist_item['checked'] \
+                else 'неотмеченый'
+            checked_compare.actual_value = 'отмеченный' if checklist_item_to_compare['checked'] \
+                else 'неотмеченый'
+
+            compare_result.add_inner_compare_result(checked_compare)
+
         else:
             compare_result.add_inner_compare_result(CompareResult(
                 TrelloElement.CHECKLIST_ITEM,
                 'Маркер'))
 
         if checklist_item_to_compare['name'] != expected_checklist_item['name']:
-            compare_result.add_inner_compare_result(CompareResult(
+            value_compare = CompareResult(
                 TrelloElement.CHECKLIST_ITEM,
-                'Элемент чек-листа',
-                CompareResultType.INVALID_VALUE))
+                'Значение',
+                CompareResultType.INVALID_VALUE)
 
-            compare_result.expected_value(expected_checklist_item['name'])
-            compare_result.actual_value(checklist_item_to_compare['name'])
+            value_compare.expected_value = expected_checklist_item['name']
+            value_compare.actual_value = checklist_item_to_compare['name']
+
+            compare_result.add_inner_compare_result(value_compare)
+
         else:
             compare_result.add_inner_compare_result(CompareResult(
                 TrelloElement.CHECKLIST_ITEM,
-                'Элемент чек-листа'))
+                'Значение'))
 
         return compare_result
 
     @classmethod
     def _compare_description(cls,
-                             description_to_compare: str,
-                             expected_description: str) -> CompareResult:
+                             card_to_compare: Card,
+                             expected_card: Card) -> CompareResult:
+        description_to_compare = card_to_compare.description.strip()
+        expected_description = expected_card.description.strip()
+
         expected_description_without_link = cls._text_link_re.sub(' ', expected_description)
         actual_description_without_link = cls._text_link_re.sub(' ', description_to_compare)
 
@@ -186,6 +194,7 @@ class TrelloCardComparer:
     def _compare_comments(cls,  # TODO fix (strange logic)
                           comments_to_compare: typing.List[str],
                           expected_comments: typing.List[str]):
+
         if len(expected_comments) == 0 and len(comments_to_compare) != 0:
             return CompareResult(
                 TrelloElement.COMMENT, compare_result_type=CompareResultType.HAS_EXTRA_ELEMENT)
@@ -196,16 +205,25 @@ class TrelloCardComparer:
             return CompareResult(TrelloElement.COMMENT)
 
         expected_first_comment = expected_comments[0]
-        actual_first_comment = comments_to_compare[0]
+        compared_first_comment = comments_to_compare[0]
 
         if cls._comment_has_mention(expected_first_comment):
-            if cls._comment_has_mention(actual_first_comment):
+            if cls._comment_has_mention(compared_first_comment):
                 return CompareResult(TrelloElement.COMMENT)
 
             return CompareResult(
                 TrelloElement.COMMENT,
                 "нет упоминания",
-                CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
+                CompareResultType.INVALID_VALUE)
+
+        if expected_first_comment != compared_first_comment:
+            result = CompareResult(
+                TrelloElement.COMMENT,
+                compare_result_type=CompareResultType.INVALID_VALUE)
+            result.expected_value = expected_first_comment
+            result.actual_value = compared_first_comment
+
+            return result
 
         return CompareResult(TrelloElement.COMMENT)
 
@@ -238,8 +256,8 @@ class TrelloCardComparer:
 
             return compare_results
 
-        labels_to_compare_colors = (item.color for item in labels_to_compare)
-        expected_labels_colors = (item.color for item in expected_labels)
+        labels_to_compare_colors = [item.color for item in labels_to_compare]
+        expected_labels_colors = [item.color for item in expected_labels]
 
         for compare_color in labels_to_compare_colors:
             if compare_color not in expected_labels_colors:
@@ -301,7 +319,7 @@ class TrelloCardComparer:
         if check_availability_func(card_to_compare) == check_availability_func(expected_card):
             return CompareResult(element)
 
-        elif check_availability_func(card_to_compare):
+        elif check_availability_func(expected_card):
             return CompareResult(
                 element,
                 compare_result_type=CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
