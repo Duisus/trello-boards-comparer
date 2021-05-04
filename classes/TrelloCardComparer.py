@@ -19,6 +19,10 @@ class TrelloCardComparer:
                       expected_card: Card) -> CompareResult:
         compare_result = CompareResult(TrelloElement.CARD, card_to_compare.name)
 
+        compare_result.add_inner_compare_result(
+            cls._compare_archive_status(card_to_compare, expected_card)
+        )
+
         for result in cls._compare_all_checklists(card_to_compare, expected_card):
             compare_result.add_inner_compare_result(result)
 
@@ -325,3 +329,24 @@ class TrelloCardComparer:
     @classmethod
     def _comment_has_mention(cls, comment: str):
         return cls._mention_member_re.search(comment) is not None
+
+    @classmethod
+    def _compare_archive_status(cls,
+                                card_to_compare: Card,
+                                expected_card: Card):
+        compare_result = CompareResult(
+            TrelloElement.CARD,
+            "Статус архивации",
+        )
+
+        if card_to_compare.closed != expected_card.closed:
+            compare_result = CompareResult(
+                TrelloElement.CARD,
+                "Статус архивации",
+                CompareResultType.INVALID_VALUE
+            )
+
+            compare_result.actual_value = card_to_compare.closed
+            compare_result.expected_value = expected_card.closed
+
+        return compare_result
