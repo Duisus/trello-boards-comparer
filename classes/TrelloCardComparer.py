@@ -26,7 +26,7 @@ class TrelloCardComparer:
         compare_result.add_inner_compare_result(
             cls._compare_comments(
                 cls._get_comments(card_to_compare),
-                cls._get_comments(expected_card.description)))
+                cls._get_comments(expected_card)))
 
         for result in cls._compare_label(card_to_compare.labels, expected_card.labels):
             compare_result.add_inner_compare_result(result)
@@ -75,12 +75,14 @@ class TrelloCardComparer:
                         cls._compare_checklist(checklists_to_compare[i],
                                                expected_checklists[j])
                     )
-                elif expected_checklists[j].name not in checklists_to_compare_names:
-                    compare_results.append(CompareResult(
-                        TrelloElement.CHECKLIST,
-                        expected_checklists[j].name,
-                        CompareResultType.DOES_NOT_CONTAIN_ELEMENT
-                    ))
+
+        for expected_checklist in expected_checklists:
+            if expected_checklist.name not in checklists_to_compare_names:
+                compare_results.append(CompareResult(
+                    TrelloElement.CHECKLIST,
+                    expected_checklist.name,
+                    CompareResultType.DOES_NOT_CONTAIN_ELEMENT
+                ))
 
         return compare_results
 
@@ -205,6 +207,29 @@ class TrelloCardComparer:
                        labels_to_compare: typing.List[Label],
                        expected_labels: typing.List[Label]) -> typing.List[CompareResult]:
         compare_results = []
+
+        if labels_to_compare is None and expected_labels is None:
+            return compare_results
+
+        elif labels_to_compare is None:
+            for label in expected_labels:
+                compare_results.append(CompareResult(
+                    TrelloElement.LABEL,
+                    label.color,
+                    CompareResultType.DOES_NOT_CONTAIN_ELEMENT
+                ))
+
+            return compare_results
+
+        elif expected_labels is None:
+            for label in labels_to_compare:
+                compare_results.append(CompareResult(
+                    TrelloElement.LABEL,
+                    label.color,
+                    CompareResultType.HAS_EXTRA_ELEMENT
+                ))
+
+            return compare_results
 
         labels_to_compare_colors = (item.color for item in labels_to_compare)
         expected_labels_colors = (item.color for item in expected_labels)

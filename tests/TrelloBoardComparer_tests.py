@@ -21,4 +21,4 @@ class TrelloBoardComparerTests(unittest.TestCase):
         self._board_comparer = TrelloBoardComparer(client)
 
     def test_compare_equal_boards(self):
-        self.assertEqual(self._board_comparer.compare_boards("Z8ZkJYlR", "2mhoAmxb").type, CompareResultType.SUCCESS)
+        self.assertEqual(CompareResultType.SUCCESS, self._board_comparer.compare_boards("Z8ZkJYlR", "2mhoAmxb").type)
