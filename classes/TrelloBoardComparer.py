@@ -3,6 +3,9 @@ from .CompareResult import *
 from .TrelloCardComparer import *
 
 
+__all__ = ["TrelloBoardComparer"]
+
+
 class TrelloBoardComparer:
     def __init__(self, trello_client: TrelloClient):
         self._trello_client = trello_client

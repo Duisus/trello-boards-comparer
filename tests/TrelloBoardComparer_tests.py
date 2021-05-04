@@ -3,6 +3,7 @@ import unittest
 from trello import *
 
 from classes.TrelloBoardComparer import *
+from classes.CompareResult import *
 
 
 CONFIG_FILE = r"..\config.json"

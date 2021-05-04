@@ -6,6 +6,9 @@ from trello import *
 from .CompareResult import *
 
 
+__all__ = ["TrelloCardComparer"]
+
+
 class TrelloCardComparer:
     _text_link_re = re.compile(r"\[.+]\(\S+\)")
     _mention_member_re = re.compile(r"@[a-zA-Z0-9_]+")
