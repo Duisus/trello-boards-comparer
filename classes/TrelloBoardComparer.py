@@ -4,7 +4,7 @@ from .TrelloCardComparer import *
 
 
 class TrelloBoardComparer:
-    def __int__(self, trello_client: TrelloClient):
+    def __init__(self, trello_client: TrelloClient):
         self._trello_client = trello_client
 
     def compare_boards(self,
