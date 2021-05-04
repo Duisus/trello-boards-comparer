@@ -102,5 +102,40 @@ class TrelloCardComparerTests(unittest.TestCase):
         expected_card_id = "jtv2DrFZ"
         self.card_comparer_test(compared_card_id, expected_card_id, expected_result)
 
-    def test_comparer_equal_card(self):
+    @parameterized.expand([
+        ("fGSFx7h9",),
+        ("0CbCb036", [CompareResultType.FAILED, CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+    ])
+    def test_cover_in_cards(self, compared_card_id, expected_result=None):
+        expected_cards_id = "vvEBx3nm"
+        self.card_comparer_test(compared_card_id, expected_cards_id, expected_result)
+
+    @parameterized.expand([
+        ("dS3oWEx9",),
+        ("EEhz0a7l",
+         [CompareResultType.FAILED,
+          CompareResultType.HAS_EXTRA_ELEMENT,
+          CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+    ])
+    def test_compare_label_in_cards(self, compared_card_id, expected_result=None):
+        expected_cards_id = "A9Z6CrJF"
+        self.card_comparer_test(compared_card_id, expected_cards_id, expected_result)
+
+    @parameterized.expand([
+        ("809GQr9b",),
+        ("oy9DktBm", [CompareResultType.FAILED, CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+    ])
+    def test_check_due_in_cards(self, compared_card_id, expected_result=None):
+        expected_cards_id = "mmaACkHa"
+        self.card_comparer_test(compared_card_id, expected_cards_id, expected_result)
+
+    @parameterized.expand([
+        ("1aEjgmDJ",),
+        ("kh7wgpqW", [CompareResultType.FAILED, CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+    ])
+    def test_check_member_in_cards(self, compared_card_id, expected_result=None):
+        expected_cards_id = "AJNZsT8W"
+        self.card_comparer_test(compared_card_id, expected_cards_id, expected_result)
+
+    def test_comparer_equal_complex_cards(self):
         self.card_comparer_test("2l4SfS5E", "jrpqIHyO")
