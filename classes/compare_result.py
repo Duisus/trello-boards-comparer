@@ -1,7 +1,6 @@
 from enum import Enum, unique
 from typing import *
 
-
 __all__ = ["CompareResult", "CompareResultType", "TrelloElement"]
 
 

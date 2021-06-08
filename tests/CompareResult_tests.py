@@ -2,7 +2,7 @@ import unittest
 
 from parameterized import parameterized
 
-from classes.CompareResult import *
+from classes.compare_result import *
 
 
 class CompareResultTests(unittest.TestCase):
