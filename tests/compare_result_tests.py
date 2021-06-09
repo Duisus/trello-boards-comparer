@@ -35,8 +35,8 @@ class CompareResultTests(unittest.TestCase):
         self.assertEqual(list(inner.get_not_success_results()), [])
 
     def test_get_not_success_result_contains_CompareResult(self):
-        self = CompareResult(TrelloElement.BOARD, '', CompareResultType.FAILED)
-        assert self in list(self.get_not_success_results())
+        result = CompareResult(TrelloElement.BOARD, '', CompareResultType.FAILED)
+        self.assertIn(result, result.get_not_success_results())
 
     def test_get_not_success_result_contains_all_not_success_results(self):
         upper = CompareResult(TrelloElement.BOARD, 'еуые', CompareResultType.FAILED)

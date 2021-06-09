@@ -4,6 +4,7 @@ from trello import *
 from parameterized import parameterized
 
 from classes.compare_result import *
+from classes.default_comparers_provider import DefaultComparersProvider
 
 CONFIG_FILE = r"..\config.json"
 
@@ -18,7 +19,6 @@ class TrelloCardComparerTests(unittest.TestCase):
             token=config_data["token"]
         )
 
-        from classes.default_comparers_provider import DefaultComparersProvider
         self.comparer = DefaultComparersProvider.create_card_comparer()
 
     def card_comparer_test(
