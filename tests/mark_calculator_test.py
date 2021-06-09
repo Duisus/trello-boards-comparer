@@ -21,7 +21,6 @@ class BoardCompareCounterTests(unittest.TestCase):
 
     def calculate_mark(self, expected_board_id, actual_board_id):
         expected_board = self._client.get_board(expected_board_id)
-        actual_board = self._client.get_board(actual_board_id)
 
         compare_amount = BoardCompareCounter.get_board_compare_amount(expected_board)
 
@@ -44,3 +43,18 @@ class BoardCompareCounterTests(unittest.TestCase):
         expected_board_id = "ERpuzOKl"
         actual_board_id = "5FKYgQ1m"
         self.assertEqual(75, self.calculate_mark(expected_board_id, actual_board_id))
+
+    def test_does_not_contain_labels(self):
+        expected_board_id = "ERpuzOKl"
+        actual_board_id = "3DAQjIdM"
+        self.assertEqual(98, self.calculate_mark(expected_board_id, actual_board_id))
+
+    def test_does_not_contain_checklist_items(self):
+        expected_board_id = "ERpuzOKl"
+        actual_board_id = "Mu2PHTu1"
+        self.assertEqual(88, self.calculate_mark(expected_board_id, actual_board_id))
+
+    def test_functionality(self):
+        expected_board_id = "ERpuzOKl"
+        actual_board_id = "OdRRYJK4"
+        self.assertEqual(50, self.calculate_mark(expected_board_id, actual_board_id))
