@@ -1,3 +1,4 @@
+
 class MethodCacheManager:
     def __init__(self, target_obj, decorate_types=None):
         self.__target_obj = target_obj
