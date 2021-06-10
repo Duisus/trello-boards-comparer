@@ -81,3 +81,10 @@ class CompareResult:
         yield self
         for inner in self._inner_compare_results:
             yield from inner.get_not_success_results()
+
+    def get_results_by_type(self, type: CompareResultType) -> Generator["CompareResult", None, None]:
+        if self.type == type:
+            yield self
+
+        for inner in self._inner_compare_results:
+            yield from inner.get_results_by_type(type)
