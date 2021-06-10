@@ -2,12 +2,12 @@ import unittest
 
 from trello import *
 
-from classes.board_compare_counter import *
+from classes.board_elements_counter import *
 
 CONFIG_FILE = r"..\config.json"
 
 
-class BoardCompareCounterTests(unittest.TestCase):
+class BoardElementsCounterTests(unittest.TestCase):
     def setUp(self):
         with open(CONFIG_FILE, "r") as file:
             config_data = json.load(file)
@@ -20,7 +20,7 @@ class BoardCompareCounterTests(unittest.TestCase):
     def get_board_compare_amount_test(self, board_id):
         board = self._client.get_board(board_id)
 
-        return BoardCompareCounter.get_board_compare_amount(board)
+        return BoardElementsCounter.count(board)
 
     def test_board_without_cards(self):
         board_id = "rK9EgGYp"

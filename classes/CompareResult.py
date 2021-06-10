@@ -88,4 +88,4 @@ class CompareResult:
             yield self
 
         for inner in self._inner_compare_results:
-                yield from inner.get_results_by_type(type)
+            yield from inner.get_results_by_type(type)

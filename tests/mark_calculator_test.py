@@ -2,14 +2,14 @@ import unittest
 
 from trello import *
 
-from classes.board_compare_counter import *
+from classes.board_elements_counter import *
 from classes.mark_calculator import *
 from classes.TrelloBoardComparer import *
 
 CONFIG_FILE = r"..\config.json"
 
 
-class BoardCompareCounterTests(unittest.TestCase):
+class MarkCalculatorTests(unittest.TestCase):
     def setUp(self):
         with open(CONFIG_FILE, "r") as file:
             config_data = json.load(file)
@@ -22,11 +22,11 @@ class BoardCompareCounterTests(unittest.TestCase):
     def calculate_mark(self, expected_board_id, actual_board_id):
         expected_board = self._client.get_board(expected_board_id)
 
-        compare_amount = BoardCompareCounter.get_board_compare_amount(expected_board)
+        compare_amount = BoardElementsCounter.count(expected_board)
 
         compare_result = TrelloBoardComparer(self._client).compare_boards(actual_board_id, expected_board_id)
 
-        compare_mark = MarkCalculator.get_compare_mark(compare_amount, compare_result)
+        compare_mark = MarkCalculator.calculate(compare_amount, compare_result)
 
         return compare_mark
 
