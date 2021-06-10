@@ -49,3 +49,4 @@ class TrelloBoardComparerTests(unittest.TestCase):
     def test_when_lists_has_different_names(self):
         self.board_compare_test("xvSU42Bj", "E4ew5UjV", [CompareResultType.FAILED, CompareResultType.HAS_EXTRA_ELEMENT,
                           CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
+

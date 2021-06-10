@@ -3,6 +3,9 @@ from .CompareResult import *
 from .TrelloCardComparer import *
 
 
+__all__ = ["TrelloBoardComparer"]
+
+
 class TrelloBoardComparer:
     def __init__(self, trello_client: TrelloClient):
         self._trello_client = trello_client
@@ -13,13 +16,13 @@ class TrelloBoardComparer:
         board_to_compare = self._trello_client.get_board(board_to_compare_id)
         expected_board = self._trello_client.get_board(expected_board_id)
 
-        lists_to_compare = board_to_compare.list_lists()
-        expected_lists = expected_board.list_lists()
+        lists_to_compare = board_to_compare.list_lists(list_filter="open")
+        expected_lists = expected_board.list_lists(list_filter="open")
 
         compare_result = CompareResult(TrelloElement.BOARD, board_to_compare.name)
 
-        lists_to_compare_names = (item.name for item in lists_to_compare)
-        expected_lists_names = (item.name for item in expected_lists)
+        lists_to_compare_names = [item.name for item in lists_to_compare]
+        expected_lists_names = [item.name for item in expected_lists]
 
         # TODO вынести в абстрактый класс
         for i in range(len(lists_to_compare)):
@@ -35,12 +38,14 @@ class TrelloBoardComparer:
                     compare_result.add_inner_compare_result(
                         self._compare_lists(lists_to_compare[i], expected_lists[j])
                     )
-                elif expected_lists[j].name not in lists_to_compare_names:
-                    compare_result.add_inner_compare_result(CompareResult(
-                        TrelloElement.LIST,
-                        expected_lists[j].name,
-                        CompareResultType.DOES_NOT_CONTAIN_ELEMENT
-                    ))
+                    
+        for expected_list in expected_lists:
+            if expected_list.name not in lists_to_compare_names:
+                compare_result.add_inner_compare_result(CompareResult(
+                    TrelloElement.LIST,
+                    expected_list.name,
+                    CompareResultType.DOES_NOT_CONTAIN_ELEMENT
+                ))
 
         return compare_result
 
@@ -66,14 +71,16 @@ class TrelloBoardComparer:
             for j in range(len(expected_cards)):
                 if cards_to_compare[i].name == expected_cards[j].name:
                     compare_result.add_inner_compare_result(
-                        self._compare_lists(cards_to_compare[i], expected_cards[j])
+                        self._compare_cards(cards_to_compare[i], expected_cards[j])
                     )
-                elif expected_cards[j].name not in cards_to_compare_names:
-                    compare_result.add_inner_compare_result(CompareResult(
-                        TrelloElement.LIST,
-                        expected_cards[j].name,
-                        CompareResultType.DOES_NOT_CONTAIN_ELEMENT
-                    ))
+
+        for expected_card in expected_cards:      
+            if expected_card.name not in cards_to_compare_names:
+                compare_result.add_inner_compare_result(CompareResult(
+                    TrelloElement.CARD,
+                    expected_card.name,
+                    CompareResultType.DOES_NOT_CONTAIN_ELEMENT
+                ))
 
         return compare_result
 
