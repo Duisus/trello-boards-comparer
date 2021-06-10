@@ -5,6 +5,9 @@ class MethodCacheManager:
         self.__cache = {}
         self.__decorate_types = decorate_types or []
 
+    def __getitem__(self, item):
+        return self.__target_obj[item]
+
     def __getattr__(self, name):
         attribute = getattr(self.__target_obj, name)
         if hasattr(attribute, "__call__"):
@@ -29,7 +32,7 @@ class MethodCacheManager:
             return MethodCacheManager(value, self.__decorate_types)
 
         if isinstance(value, (list, tuple)):
-            value = self.__decorate_collection_values(value)
+            return self.__decorate_collection_values(value)
 
         return value
 

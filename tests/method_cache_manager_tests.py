@@ -22,6 +22,9 @@ class TestClass:
     def get_decorate_objects_tuple(self):
         return (TestDecorateClass(), TestDecorateClass(), TestDecorateClass())
 
+    def __getitem__(self, item):
+        return item * 3
+
 
 class TestDecorateClass:
     pass
@@ -108,3 +111,15 @@ class MethodCacheManagerTests(unittest.TestCase):
     def test_all_objects_of_decorate_type_in_list_is_decorated_by_cache_manager(self):
         for value in self.decorated_obj.get_decorate_objects_list():
             self.assertIsInstance(value, MethodCacheManager)
+
+    def test__try_get_attribute_that_not_contains_in_origin_obj__AttributeError_is_raised(self):
+        self.assertRaises(
+            AttributeError,
+            lambda: self.decorated_obj.does_not_have)
+
+    def test__getitem_return_same_result_as_origin_object(self):
+        arg = (1, 2, 3)
+
+        self.assertEqual(
+            self.test_obj[arg],
+            self.decorated_obj[arg])
