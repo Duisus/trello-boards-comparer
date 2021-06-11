@@ -1,5 +1,5 @@
 .compare-report {
-    font-size: 18px;
+    font-size: 17px;
     display: inline-block;
     width: 750px;
     min-height: 500px;
@@ -34,7 +34,7 @@
 
 .element-header {
     display: inline-flex;
-    min-width: 350px;
+    width: 580px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 3px solid #0075b4;
@@ -68,14 +68,13 @@
 
 .comparisons li {
     padding: 0;
-    margin-left: 20px;
+    margin-left: 25px;
     list-style-type: none;
     margin-top: 25px;
 }
 
 .expected-actual {
     padding: 2px;
-    margin: 0;
 }
 
 .btn {
