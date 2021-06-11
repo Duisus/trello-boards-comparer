@@ -4,30 +4,48 @@
     width: 750px;
     min-height: 500px;
     padding: 10px;
+    padding-left: 25px;
     border: 5px solid black;
     border-radius: 12px;
     margin: 15px;
+    font-family: 'Source Sans Pro', sans-serif;
+    overflow: hidden;
 }
 
 .mark {
-    border-bottom: 2px solid #0075b4;
     margin: 0;
     padding: 5px;
+    padding-left: 0;
     margin-bottom: 15px;
+    position: relative;
+}
+
+.mark::before {
+    background-color: #62B0DA;
+    content: "";
+    position: absolute;
+    height: 150%;
+    width: 150%;
+    z-index: -1;
+    left: -40px;
+    top: -15px;
+    opacity: 0.6;
 }
 
 .element-header {
     display: inline-flex;
-    width: 300px;
+    min-width: 350px;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #0075b4;
+    border-bottom: 3px solid #0075b4;
     padding-bottom: 5px;
 }
 
 .element-info {
     padding: 0;
     margin: 0;
+    font-weight: 600;
+    margin-right: 50px;
 }
 
 .comparisons {
@@ -40,8 +58,11 @@
     padding: 0;
     margin: 0;
     margin-top: 10px;
-    box-shadow: -2px 0 0 rgba(0,117,180, 1);
+    box-shadow: -1px 0 0 rgba(0,117,180, 0.5);
     transition: box-shadow 0.5s;
+}
+
+.left-border {
 }
 
 .comparisons li {
@@ -61,10 +82,15 @@
     height: 20px;
     text-align: center;
     text-decoration: none;
-    border: 2px solid #0075b4;
-    border-radius: 3px;
+    transform: rotate(-90deg);
 }
 
 .btn.active {
-    transform: rotate(-90deg);
+    transform: rotate(0);
+}
+
+.arrow {
+    width: 15px;
+    height: 15px;
+    fill: #0075b4;
 }
