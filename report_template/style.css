@@ -8,7 +8,7 @@
     border: 5px solid black;
     border-radius: 12px;
     margin: 15px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans Pro', 'Trebuchet MS', sans-serif;
     overflow: hidden;
 }
 
@@ -44,32 +44,33 @@
 .element-info {
     padding: 0;
     margin: 0;
-    font-weight: 600;
     margin-right: 50px;
 }
 
 .comparisons {
-    display: none;
-}
-
-.comparisons.active {
-    display: block;
     border: 0;
     padding: 0;
     margin: 0;
     margin-top: 10px;
     box-shadow: -1px 0 0 rgba(0,117,180, 0.5);
-    transition: box-shadow 0.5s;
+
+    transition: opacity 0.2s linear;
+    opacity: 0;
 }
 
-.left-border {
+.hidden {
+    display: none;
+}
+
+.comparisons.active {
+    opacity: 1;
 }
 
 .comparisons li {
     padding: 0;
     margin-left: 20px;
     list-style-type: none;
-    margin-bottom: 10px;
+    margin-top: 25px;
 }
 
 .expected-actual {
@@ -83,6 +84,7 @@
     text-align: center;
     text-decoration: none;
     transform: rotate(-90deg);
+    transition: transform 0.3s ease-in;
 }
 
 .btn.active {
