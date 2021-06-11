@@ -38,7 +38,7 @@ class TrelloCardComparerTests(unittest.TestCase):
          [CompareResultType.FAILED, CompareResultType.FAILED,
           CompareResultType.FAILED, CompareResultType.INVALID_VALUE,
           CompareResultType.FAILED, CompareResultType.INVALID_VALUE, CompareResultType.INVALID_VALUE,
-          CompareResultType.HAS_EXTRA_ELEMENT])
+          CompareResultType.EXTRA_ELEMENT])
     ])
     def test_checklist_items_comparing(self, compared_card_id, expected_result=None):
         expected_card_id = "xXq2tR5U"
@@ -48,7 +48,7 @@ class TrelloCardComparerTests(unittest.TestCase):
         ("UNt8K4Wu",),
         ("uXQGvleB",
          [CompareResultType.FAILED,
-          CompareResultType.HAS_EXTRA_ELEMENT,
+          CompareResultType.EXTRA_ELEMENT,
           CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
     ])
     def test_checklists_comparing(self, compared_card_id, expected_result=None):
@@ -116,7 +116,7 @@ class TrelloCardComparerTests(unittest.TestCase):
         ("dS3oWEx9",),
         ("EEhz0a7l",
          [CompareResultType.FAILED,
-          CompareResultType.HAS_EXTRA_ELEMENT,
+          CompareResultType.EXTRA_ELEMENT,
           CompareResultType.DOES_NOT_CONTAIN_ELEMENT])
     ])
     def test_compare_label_in_cards(self, compared_card_id, expected_result=None):

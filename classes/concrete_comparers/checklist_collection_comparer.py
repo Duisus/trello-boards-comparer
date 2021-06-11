@@ -23,7 +23,7 @@ class ChecklistCollectionComparer(BaseCollectionComparer):
                 compare_results.append(CompareResult(
                     TrelloElement.CHECKLIST,
                     checklists_to_compare[i].name,
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
 
             for j in range(len(expected_checklists)):

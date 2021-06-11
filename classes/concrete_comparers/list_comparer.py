@@ -22,7 +22,7 @@ class ListComparer(BaseCollectionComparer):
                 compare_result.add_inner_compare_result(CompareResult(
                     TrelloElement.CARD,
                     actual_cards[i].name,
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
 
             for j in range(len(expected_cards)):

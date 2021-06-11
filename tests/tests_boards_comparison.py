@@ -42,7 +42,7 @@ class TrelloBoardComparerTests(unittest.TestCase):
     def test_board_has_extra_list(self):
         self.board_compare_test(
             "GCDV6cxz", "E4ew5UjV",
-            [CompareResultType.FAILED, CompareResultType.HAS_EXTRA_ELEMENT])
+            [CompareResultType.FAILED, CompareResultType.EXTRA_ELEMENT])
 
     def test_empty_board(self):
         self.board_compare_test(
@@ -58,5 +58,5 @@ class TrelloBoardComparerTests(unittest.TestCase):
     def test_when_lists_has_different_names(self):
         self.board_compare_test(
             "xvSU42Bj", "E4ew5UjV",
-            [CompareResultType.FAILED, CompareResultType.HAS_EXTRA_ELEMENT,
+            [CompareResultType.FAILED, CompareResultType.EXTRA_ELEMENT,
              CompareResultType.DOES_NOT_CONTAIN_ELEMENT])

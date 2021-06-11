@@ -21,7 +21,7 @@ class MarkCalculator:
         )))
 
         extra_element_amount = len(list(compare_result.get_results_by_type(
-            CompareResultType.HAS_EXTRA_ELEMENT
+            CompareResultType.EXTRA_ELEMENT
         )))
 
         return success_result_amount + failed_results_amount - extra_element_amount

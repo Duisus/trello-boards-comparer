@@ -32,7 +32,7 @@ class LabelComparer(BaseComparer):  # todo BaseCollectionComparer?
                 compare_results.append(CompareResult(
                     TrelloElement.LABEL,
                     label.color,
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
 
             return compare_results
@@ -45,7 +45,7 @@ class LabelComparer(BaseComparer):  # todo BaseCollectionComparer?
                 compare_results.append(CompareResult(
                     TrelloElement.LABEL,
                     compare_color,
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
             else:
                 compare_results.append(CompareResult(

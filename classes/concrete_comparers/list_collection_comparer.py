@@ -24,7 +24,7 @@ class ListCollectionComparer(BaseCollectionComparer):
                 results.append(CompareResult(
                     TrelloElement.LIST,
                     actual_lists[i].name,
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
 
             for j in range(len(expected_lists)):

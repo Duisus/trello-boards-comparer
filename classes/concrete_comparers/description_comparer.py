@@ -12,19 +12,20 @@ class DescriptionComparer(BaseComparer):
     _markdown_link_re = re.compile(r"\[.+]\(\S+\)")
 
     def _current_compare(self, actual: Card, expected: Card) -> CompareResult:
-        description_to_compare = actual.description.strip()
+        actual_description = actual.description.strip()
         expected_description = expected.description.strip()
 
         expected_description_without_link = self._markdown_link_re.sub(
             ' ', expected_description)
         actual_description_without_link = self._markdown_link_re.sub(
-            ' ', description_to_compare)
+            ' ', actual_description)
 
         if expected_description_without_link != actual_description_without_link:
             result = CompareResult(TrelloElement.DESCRIPTION,
-                                   compare_result_type=CompareResultType.INVALID_VALUE)
-            result.expected_value = expected_description
-            result.actual_value = description_to_compare
+                                   result_type=CompareResultType.INVALID_VALUE)
+            result.set_actual_and_expected(
+                actual_description, expected_description)
+
             return result
 
         return CompareResult(TrelloElement.DESCRIPTION)

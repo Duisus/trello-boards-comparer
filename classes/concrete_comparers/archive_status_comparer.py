@@ -20,8 +20,9 @@ class ArchiveStatusComparer(BaseComparer):
                 "Статус архивации",
                 CompareResultType.INVALID_VALUE
             )
-
-            compare_result.actual_value = actual.closed
-            compare_result.expected_value = expected.closed
+            compare_result.set_actual_and_expected(
+                actual.closed,
+                expected.closed
+            )
 
         return compare_result
