@@ -2,8 +2,8 @@ import unittest
 
 from trello import *
 
-from classes.compare_result import *
-from classes.default_comparers_provider import DefaultComparersProvider
+from classes.compare.compare_result import *
+from classes.compare.default_comparers_provider import DefaultComparersProvider
 
 CONFIG_FILE = r"..\config.json"
 

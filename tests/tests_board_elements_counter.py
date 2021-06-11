@@ -2,7 +2,7 @@ import unittest
 
 from trello import *
 
-from classes.board_elements_counter import *
+from classes.mark_calculation.board_elements_counter import *
 
 CONFIG_FILE = r"..\config.json"
 

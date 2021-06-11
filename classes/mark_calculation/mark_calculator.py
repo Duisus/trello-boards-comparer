@@ -1,4 +1,4 @@
-from .compare_result import *
+from classes.compare.compare_result import *
 
 __all__ = ["MarkCalculator"]
 

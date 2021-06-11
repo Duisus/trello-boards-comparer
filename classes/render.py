@@ -2,7 +2,7 @@ import os
 
 from jinja2 import Environment, FileSystemLoader
 
-from classes.compare_result import CompareResult
+from classes.compare.compare_result import CompareResult
 
 __all__ = ["get_report"]
 
