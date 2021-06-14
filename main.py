@@ -13,6 +13,7 @@ if __name__ == "__main__":
         token=config_data["token"]
     )
 
-    board = client.get_board(config_data["reference_board_id"])
+    board_id = "id of board"
+    board = client.get_board(board_id)
 
     input()
