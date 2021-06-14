@@ -2,7 +2,7 @@ import unittest
 
 from parameterized import parameterized
 
-from classes.compare_result import *
+from classes.compare.compare_result import *
 
 
 class CompareResultTests(unittest.TestCase):
@@ -14,12 +14,12 @@ class CompareResultTests(unittest.TestCase):
     @parameterized.expand([
         (CompareResultType.FAILED,),
         (CompareResultType.DOES_NOT_CONTAIN_ELEMENT,),
-        (CompareResultType.HAS_EXTRA_ELEMENT,),
+        (CompareResultType.EXTRA_ELEMENT,),
         (CompareResultType.INVALID_VALUE,)
     ])
     def test_add_inner_result_if_TypeOfAddedCompareResultIsNotSuccess_ContainerElementHasFailedType(
             self, compare_result_type):
-        inner = CompareResult(TrelloElement.BOARD, compare_result_type=compare_result_type)
+        inner = CompareResult(TrelloElement.BOARD, result_type=compare_result_type)
 
         self.compare_result.add_inner_compare_result(inner)
 
@@ -47,11 +47,11 @@ class CompareResultTests(unittest.TestCase):
             upper.get_not_success_results())
 
     def test_get_not_success_result_does_not_return_success_CompareResults(self):
-        upper = CompareResult(TrelloElement.BOARD, compare_result_type=CompareResultType.FAILED)
+        upper = CompareResult(TrelloElement.BOARD, result_type=CompareResultType.FAILED)
         upper.add_inner_compare_result(
-            CompareResult(TrelloElement.LIST, compare_result_type=CompareResultType.FAILED))
+            CompareResult(TrelloElement.LIST, result_type=CompareResultType.FAILED))
         success_result = CompareResult(
-            TrelloElement.LIST, compare_result_type=CompareResultType.SUCCESS)
+            TrelloElement.LIST, result_type=CompareResultType.SUCCESS)
         upper.add_inner_compare_result(success_result)
 
         assert success_result not in upper.get_not_success_results()
@@ -68,7 +68,7 @@ class CompareResultTests(unittest.TestCase):
             CompareResult(TrelloElement.COVER, names[3], CompareResultType.DOES_NOT_CONTAIN_ELEMENT))
         upper_result.add_inner_compare_result(inner_result)
         upper_result.add_inner_compare_result(
-            CompareResult(TrelloElement.CARD, names[4], CompareResultType.HAS_EXTRA_ELEMENT))
+            CompareResult(TrelloElement.CARD, names[4], CompareResultType.EXTRA_ELEMENT))
 
         actual = [result.compared_element_name for result in upper_result.get_not_success_results()]
 

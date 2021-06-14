@@ -29,7 +29,7 @@ class ChecklistComparer(BaseCollectionComparer):
                 compare_result.add_inner_compare_result(CompareResult(
                     TrelloElement.CHECKLIST_ITEM,
                     checklist_items_to_compare[i]['name'],
-                    CompareResultType.HAS_EXTRA_ELEMENT
+                    CompareResultType.EXTRA_ELEMENT
                 ))
 
         if len(checklist_items_to_compare) < len(expected_checklist_items):

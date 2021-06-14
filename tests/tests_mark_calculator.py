@@ -2,9 +2,9 @@ import unittest
 
 from trello import *
 
-from classes.board_elements_counter import *
-from classes.mark_calculator import *
-from classes.default_comparers_provider import *
+from classes.mark_calculation.board_elements_counter import *
+from classes.mark_calculation.mark_calculator import *
+from classes.compare.default_comparers_provider import *
 
 CONFIG_FILE = r"..\config.json"
 

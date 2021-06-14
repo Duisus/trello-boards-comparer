@@ -18,10 +18,10 @@ class ChecklistItemComparer(BaseComparer):
                 'Маркер',
                 CompareResultType.INVALID_VALUE)
 
-            checked_compare.expected_value = 'отмеченый' if expected['checked'] \
-                else 'неотмеченый'
-            checked_compare.actual_value = 'отмеченный' if actual['checked'] \
-                else 'неотмеченый'
+            checked_compare.set_actual_and_expected(
+                'отмеченный' if actual['checked'] else 'неотмеченый',
+                'отмеченый' if expected['checked'] else 'неотмеченый'
+            )
 
             compare_result.add_inner_compare_result(checked_compare)
 
@@ -36,8 +36,8 @@ class ChecklistItemComparer(BaseComparer):
                 'Значение',
                 CompareResultType.INVALID_VALUE)
 
-            value_compare.expected_value = expected['name']
-            value_compare.actual_value = actual['name']
+            value_compare.set_actual_and_expected(
+                actual['name'], expected['name'])
 
             compare_result.add_inner_compare_result(value_compare)
 

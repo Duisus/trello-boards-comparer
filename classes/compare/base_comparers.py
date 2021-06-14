@@ -27,7 +27,7 @@ class BaseComparer(ABC):
         return result
 
     @abstractmethod
-    def _current_compare(self, actual, expected) -> CompareResult:
+    def _current_compare(self, actual, expected) -> CompareResult:  # todo change with Union
         pass
 
 
@@ -54,11 +54,11 @@ class AvailabilityComparer(BaseComparer, ABC):  # todo Maybe is ExistenceCompare
         elif self._has_element(expected):
             return CompareResult(
                 self._element_type,
-                compare_result_type=CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
+                result_type=CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
 
         return CompareResult(
             self._element_type,
-            compare_result_type=CompareResultType.HAS_EXTRA_ELEMENT)
+            result_type=CompareResultType.EXTRA_ELEMENT)
 
     @abstractmethod
     def _has_element(self, card_to_check: Card):

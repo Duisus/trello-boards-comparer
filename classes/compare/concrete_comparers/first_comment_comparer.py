@@ -19,19 +19,19 @@ class FirstCommentComparer(BaseComparer):
         if len(expected_comments) == 0 and len(actual_comments) != 0:
             return CompareResult(
                 TrelloElement.COMMENT,
-                compare_result_type=CompareResultType.HAS_EXTRA_ELEMENT)
+                result_type=CompareResultType.EXTRA_ELEMENT)
         elif len(expected_comments) != 0 and len(actual_comments) == 0:
             return CompareResult(
                 TrelloElement.COMMENT,
-                compare_result_type=CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
+                result_type=CompareResultType.DOES_NOT_CONTAIN_ELEMENT)
         elif len(expected_comments) == 0 and len(actual_comments) == 0:
             return CompareResult(TrelloElement.COMMENT)
 
         expected_first_comment = expected_comments[0]
-        compared_first_comment = actual_comments[0]
+        actual_first_comment = actual_comments[0]
 
         if self._comment_has_mention(expected_first_comment):
-            if self._comment_has_mention(compared_first_comment):
+            if self._comment_has_mention(actual_first_comment):
                 return CompareResult(TrelloElement.COMMENT)
 
             return CompareResult(
@@ -39,12 +39,12 @@ class FirstCommentComparer(BaseComparer):
                 "нет упоминания",
                 CompareResultType.INVALID_VALUE)
 
-        if expected_first_comment != compared_first_comment:
+        if expected_first_comment != actual_first_comment:
             result = CompareResult(
                 TrelloElement.COMMENT,
-                compare_result_type=CompareResultType.INVALID_VALUE)
-            result.expected_value = expected_first_comment
-            result.actual_value = compared_first_comment
+                result_type=CompareResultType.INVALID_VALUE)
+            result.set_actual_and_expected(
+                actual_first_comment, expected_first_comment)
 
             return result
 
