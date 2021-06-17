@@ -24,7 +24,7 @@ class MarkCalculatorTests(unittest.TestCase):
 
         compare_amount = BoardElementsCounter.count(expected_board)
 
-        comparer = DefaultComparersProvider.create_board_comparer(self._client)
+        comparer = DefaultComparersProvider.create_board_comparer_using_id(self._client)
         compare_result = comparer.start_compare(actual_board_id, expected_board_id)
 
         compare_mark = MarkCalculator.calculate(compare_amount, compare_result)

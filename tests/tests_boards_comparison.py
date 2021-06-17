@@ -18,7 +18,7 @@ class TrelloBoardComparerTests(unittest.TestCase):
             token=config_data["token"]
         )
 
-        self._board_comparer = DefaultComparersProvider.create_board_comparer(client)
+        self._board_comparer = DefaultComparersProvider.create_board_comparer_using_id(client)
 
     def board_compare_test(self, compared_board_id, expected_board_id,
                            expected_result_types):

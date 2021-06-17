@@ -1,9 +1,12 @@
 from trello import TrelloClient
 
+from .concrete_comparers.board_comparer import BoardComparer
+from .concrete_comparers.board_comparer_using_id import BoardComparerUsingId
+from .concrete_comparers.list_collection_comparer import ListCollectionComparer
+from .concrete_comparers.list_comparer import ListComparer
+from .concrete_comparers.card_comparer import CardComparer
 from .concrete_comparers.archive_status_comparer import ArchiveStatusComparer
 from .concrete_comparers.attachment_comparer import AttachmentComparer
-from .concrete_comparers.board_comparer import BoardComparer
-from .concrete_comparers.card_comparer import CardComparer
 from .concrete_comparers.checklist_collection_comparer import ChecklistCollectionComparer
 from .concrete_comparers.checklist_comparer import ChecklistComparer
 from .concrete_comparers.checklist_item_comparer import ChecklistItemComparer
@@ -12,16 +15,18 @@ from .concrete_comparers.description_comparer import DescriptionComparer
 from .concrete_comparers.due_comparer import DueComparer
 from .concrete_comparers.first_comment_comparer import FirstCommentComparer
 from .concrete_comparers.label_comparer import LabelComparer
-from .concrete_comparers.list_collection_comparer import ListCollectionComparer
-from .concrete_comparers.list_comparer import ListComparer
 from .concrete_comparers.members_comparer import MembersComparer
 
 
 class DefaultComparersProvider:
 
     @classmethod
-    def create_board_comparer(cls, trello_client: TrelloClient):
-        return BoardComparer(trello_client, [cls.create_lists_comparer()])
+    def create_board_comparer_using_id(cls, trello_client: TrelloClient):
+        return BoardComparerUsingId(trello_client, [cls.create_lists_comparer()])
+
+    @classmethod
+    def create_board_comparer(cls):
+        return BoardComparer([cls.create_lists_comparer()])
 
     @classmethod
     def create_lists_comparer(cls):
