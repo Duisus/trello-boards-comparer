@@ -24,4 +24,6 @@ class MarkCalculator:
             CompareResultType.EXTRA_ELEMENT
         )))
 
-        return success_result_amount + failed_results_amount - extra_element_amount
+        primary_scores = success_result_amount + failed_results_amount - extra_element_amount
+
+        return primary_scores if primary_scores >= 0 else 0
