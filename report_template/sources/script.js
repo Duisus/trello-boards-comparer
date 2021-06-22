@@ -1,4 +1,4 @@
-let expandButtons = document.querySelectorAll(".btn");
+let expandButtons = document.querySelectorAll(".trello-compare-report .btn");
 
 for (let button of expandButtons) {
     button.addEventListener("click", handleExpandButtonClick)

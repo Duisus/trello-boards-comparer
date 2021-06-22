@@ -16,6 +16,6 @@ ENV = Environment(loader=FileSystemLoader(_get_path_to_templates()))
 
 
 def get_report(compare_result: CompareResult, mark: int) -> str:
-    template = ENV.get_template("report-template.html.jinja")
+    template = ENV.get_template("report-content.html.jinja")
 
     return template.render(compare_result=compare_result, mark=mark)

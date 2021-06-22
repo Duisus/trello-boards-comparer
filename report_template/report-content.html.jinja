@@ -1,4 +1,7 @@
-<main class="compare-report">
+<main class="trello-compare-report">
+    <style>
+        {% include "sources/style.css" %}
+    </style>
 
     <h3 class="mark">
         Твоя оценка: {{ mark }} / 100
@@ -14,4 +17,7 @@
         </section>
     {% endif %}
 
+    <script type="text/javascript">
+        {% include "sources/script.js" %}
+    </script>
 </main>
