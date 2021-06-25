@@ -7,7 +7,7 @@ from classes.mark_calculation import board_elements_counter, mark_calculator
 CONFIG_FILE = "config.json"
 
 
-def checktrellolab(board_id_actual):
+def checktrellolab(board_id_actual, board_id_expected):
     with open(CONFIG_FILE, "r") as file:
         config_data = json.load(file)
 
@@ -17,7 +17,6 @@ def checktrellolab(board_id_actual):
     )
 
     board_actual = client.get_board(board_id_actual)
-    board_id_expected = "E4ew5UjV"  # хардкод (temporary)
     board_expected = client.get_board(board_id_expected)
     mcm_expected = method_cache_manager.MethodCacheManager(board_expected)
     comparer = default_comparers_provider.DefaultComparersProvider.create_board_comparer()
