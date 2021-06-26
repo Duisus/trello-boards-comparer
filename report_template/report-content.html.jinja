@@ -1,0 +1,23 @@
+<main class="trello-compare-report">
+    <style>
+        {% include "sources/style.css" %}
+    </style>
+
+    <h3 class="mark">
+        Твоя оценка: {{ mark }} / 100
+    </h3>
+
+    {% set results = compare_result.get_not_success_results() %}
+    {% if mark == 100 %}
+        <p>Все успешно. Ты молодец!</p>
+    {% else %}
+        {% import "details-macro.html.jinja" as details_macro %}
+        <section class="details">
+            {{ details_macro.get_compare_details(compare_result) }}
+        </section>
+    {% endif %}
+
+    <script type="text/javascript">
+        {% include "sources/script.js" %}
+    </script>
+</main>

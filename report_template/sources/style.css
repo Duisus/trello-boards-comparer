@@ -1,0 +1,97 @@
+.trello-compare-report {
+    font-size: 17px;
+    display: inline-block;
+    width: 750px;
+    min-height: 500px;
+    padding: 10px;
+    padding-left: 25px;
+    border: 5px solid black;
+    border-radius: 12px;
+    margin: 15px;
+    font-family: 'Source Sans Pro', 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+}
+
+.trello-compare-report .mark {
+    margin: 0;
+    padding: 5px;
+    padding-left: 0;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.trello-compare-report .mark::before {
+    background-color: #62B0DA;
+    content: "";
+    position: absolute;
+    height: 150%;
+    width: 150%;
+    z-index: -1;
+    left: -40px;
+    top: -15px;
+    opacity: 0.6;
+}
+
+.trello-compare-report .element-header {
+    display: inline-flex;
+    width: 580px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid #0075b4;
+    padding-bottom: 5px;
+}
+
+.trello-compare-report .element-info {
+    padding: 0;
+    margin: 0;
+    margin-right: 50px;
+}
+
+.trello-compare-report .comparisons {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    box-shadow: -1px 0 0 rgba(0,117,180, 0.5);
+
+    transition: opacity 0.2s linear;
+    opacity: 0;
+}
+
+.trello-compare-report .hidden {
+    display: none;
+}
+
+.trello-compare-report .comparisons.active {
+    opacity: 1;
+}
+
+.trello-compare-report .comparisons li {
+    padding: 0;
+    margin-left: 25px;
+    list-style-type: none;
+    margin-top: 25px;
+}
+
+.trello-compare-report .expected-actual {
+    padding: 2px;
+}
+
+.trello-compare-report .btn {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    text-decoration: none;
+    transform: rotate(-90deg);
+    transition: transform 0.2s ease-in;
+}
+
+.trello-compare-report .btn.active {
+    transform: rotate(0);
+}
+
+.trello-compare-report .arrow {
+    width: 15px;
+    height: 15px;
+    fill: #0075b4;
+}

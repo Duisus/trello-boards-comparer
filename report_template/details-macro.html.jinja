@@ -1,0 +1,35 @@
+{% macro get_compare_details(compare) %}
+    <article class="element-header">
+        <p class="element-info">
+            {{ compare.compared_element.element_name|capitalize }}
+            {% if compare.compared_element_name != "" %}
+                "{{ compare.compared_element_name }}"
+            {% endif %}
+            - {{ compare.type.description }}
+        </p>
+        <a class="btn" href="#">
+            {% include "sources/arrow.svg" %}
+        </a>
+    </article>
+
+    <ul class="comparisons hidden">
+        {% if compare.expected_value is not none %}
+            <li>
+                <p class="expected-actual">
+                    Ожидали: {{ compare.expected_value }}
+                </p>
+                <p class="expected-actual">
+                    Получили: {{ compare.actual_value }}
+                </p>
+            </li>
+        {% endif %}
+
+        {% for inner_result in compare.inner_results %}
+            {% if not inner_result.is_success %}
+                <li>
+                    {{ get_compare_details(inner_result) }}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}
