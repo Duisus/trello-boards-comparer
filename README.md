@@ -1,4 +1,6 @@
-# Проверка лабораторных работ по Trello
+# Configurable comparer of trello boards
+
+## Проверка лабораторных работ по Trello
 
 ### Перед началом работы нужно создать и наполнить файл config.json, по примеру config-EXAMPLE.json
 
